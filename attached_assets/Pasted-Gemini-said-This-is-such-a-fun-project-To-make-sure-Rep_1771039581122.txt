@@ -1,0 +1,72 @@
+Gemini said
+This is such a fun project! To make sure Replit captures that specific "vintage-yet-quirky" soul, the prompt needs to be extremely specific about the vibe (fonts, colors) and the logic (the runaway button and keyboard triggers).
+
+Copy and paste the prompt below into Replit’s "Build a web app" or "Edit with Ghostwriter" tool.
+
+The Replit Prompt
+Role: You are a creative front-end developer specializing in "Digital Gardens" and "90s GeoCities" aesthetic nostalgia.
+
+Task: Build a single-page, vintage-themed Valentine’s website for "Manshika" at the domain happyvalentinesmanshika. The site should feel like a digital scrapbook or a quirky 1990s personal blog.
+
+Visual Aesthetic:
+
+Colors: Cream background (#FFFDD0), dusty rose accents, and sage green borders.
+
+Fonts: Use 'Courier New' or 'Georgia' for a typewriter/vintage feel.
+
+Vibe: Use pixel-art icons, simple dashed borders, and "Polaroid" style image frames. Add a cursor trail effect with tiny pixel hearts.
+
+Core Features & Sections:
+
+The Hero Section ("The Big Question"):
+
+A centered, cute heading: "Manshika, will you be my Valentine?"
+
+The "No" Button: When hovered or touched, it must teleport/run away to a random position on the screen, making it impossible to click.
+
+The "Yes" Button: When clicked, trigger a massive burst of digital confetti (use canvas-confetti library) and start playing "Fly Me to the Moon" or a random romantic track from a predefined list.
+
+The Global Music Player:
+
+A fixed "Winamp-style" mini-player in the bottom corner.
+
+It should have a volume slider labeled "Vibe Level" that only goes from "Loud" to "Very Loud."
+
+Randomly pick a song on load (Placeholder URLs for now: Lo-fi romantic beats).
+
+The Secret "LOVE" Logic:
+
+Implement a global event listener. If the user types the word "LOVE" (case insensitive) anywhere on the site, hide the main content and reveal a "Hidden Love Blog" section.
+
+The Love Blog Content: A typewriter-style animated letter. Include a "Monthly Progress Report" table (30 days since meeting, 100% simp rate) and a "Manshika-to-English" dictionary.
+
+If the user types "love you too", transition back to the main "Will you be my Valentine" screen.
+
+The Compliment Generator:
+
+A chunky vintage button: "Click for Serotonin."
+
+Every click displays a new random compliment for Manshika (e.g., "Your laugh is my favorite notification," "10/10 even when sleepy").
+
+Polaroid Gallery:
+
+A section for photos. Use CSS to make them look like Polaroids.
+
+Easter Egg: Photos should be slightly blurry initially. On hover, they "develop" (become clear).
+
+Technical Requirements:
+
+Use a single index.html, style.css, and script.js.
+
+Use canvas-confetti via CDN for the Yes button.
+
+Ensure the layout is responsive but keeps that "boxy" vintage layout.
+
+Include comments in the code so I can easily swap out the placeholder images and music URLs later.
+
+A few "Insider" tips for your content:
+The "No" Button: If you want to be extra cheeky, you can make the "No" button occasionally show a tooltip when she tries to click it that says "Nice try!" or "Error: Action not allowed."
+
+The Music: Since Replit needs direct links, you can use royalty-free MP3 links or, if you're feeling techy later, embed a hidden YouTube player that the "Yes" button triggers.
+
+The "LOVE" trigger: Make sure to tell Manshika "there's a secret hidden in the letters" so she knows to try typing it!
