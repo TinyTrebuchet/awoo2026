@@ -11,6 +11,10 @@ export default {
         sm: ".1875rem", /* 3px */
       },
       colors: {
+        cream: "#FFFDD0",
+        dustyRose: "#DCAE96",
+        sage: "#9CAF88",
+        vintageBlack: "#2C2C2C",
         // Flat / base colors (regular buttons)
         background: "hsl(var(--background) / <alpha-value>)",
         foreground: "hsl(var(--foreground) / <alpha-value>)",
@@ -84,8 +88,10 @@ export default {
       },
       fontFamily: {
         sans: ["var(--font-sans)"],
-        serif: ["var(--font-serif)"],
+        serif: ["'Courier New'", "Courier", "monospace", "var(--font-serif)"],
         mono: ["var(--font-mono)"],
+        display: ["'Press Start 2P'", "cursive"],
+        handwriting: ["'Caveat'", "cursive"],
       },
       keyframes: {
         "accordion-down": {
