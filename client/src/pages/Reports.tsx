@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/card";
+import { Card } from "@/components/ui/card";
 
 export default function Reports() {
   const dictionary = [
@@ -67,7 +67,7 @@ export default function Reports() {
 
         <section className="bg-white p-8 border-4 border-double border-sage shadow-[8px_8px_0px_0px_rgba(156,175,136,0.5)]">
           <h2 className="text-2xl font-display mb-6 border-b-2 border-dustyRose pb-2">The Manshika-to-English Dictionary</h2>
-          <div className="grid gap-4">
+          <div className="space-y-4">
             {dictionary.map((item) => (
               <div key={item.term} className="flex gap-4 items-start group">
                 <div className="bg-dustyRose text-white font-mono text-xs px-2 py-1 rotate-[-2deg] shrink-0 group-hover:rotate-0 transition-transform">
