@@ -83,9 +83,8 @@ export default function Home() {
   }
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden">
+    <div className="min-h-screen relative overflow-x-hidden pb-32 bg-cream">
       <div className="scanlines" />
-      <MusicPlayer />
 
       {/* Hero Section */}
       <main className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[80vh] relative z-10">

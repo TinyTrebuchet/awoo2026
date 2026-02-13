@@ -18,6 +18,16 @@ export async function registerRoutes(
     res.json(songs);
   });
 
+  app.get("/api/guestbook", async (_req, res) => {
+    const entries = await storage.getGuestbookEntries();
+    res.json(entries);
+  });
+
+  app.post("/api/guestbook", async (req, res) => {
+    const entry = await storage.createGuestbookEntry(req.body);
+    res.json(entry);
+  });
+
   await seedDatabase();
 
   return httpServer;

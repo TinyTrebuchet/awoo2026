@@ -13,6 +13,13 @@ export const songs = pgTable("songs", {
   url: text("url").notNull(),
 });
 
+export const guestbookEntries = pgTable("guestbook_entries", {
+  id: serial("id").primaryKey(),
+  name: text("name").notNull(),
+  message: text("message").notNull(),
+  approved: boolean("approved").default(false),
+});
+
 export const insertComplimentSchema = createInsertSchema(compliments).pick({
   text: true,
 });
