@@ -1,22 +1,23 @@
 import { useState, useRef, useEffect } from "react";
 import { Play, Pause, SkipForward, Volume2, Disc } from "lucide-react";
 import { motion } from "framer-motion";
-import { useSongs } from "@/hooks/use-songs";
+import { MUSIC_PLAYER_PLAYLIST } from "@shared/app-config";
 
 export function MusicPlayer() {
-  const { data: songs } = useSongs();
   const [isPlaying, setIsPlaying] = useState(false);
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [volume, setVolume] = useState(0.5);
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
-  // Fallback songs if API is empty
-  const playlist = songs?.length ? songs : [
-    { id: 1, title: "Lofi Beats 1", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-1.mp3" },
-    { id: 2, title: "Lofi Beats 2", url: "https://www.soundhelix.com/examples/mp3/SoundHelix-Song-2.mp3" },
-  ];
+  const playlist = MUSIC_PLAYER_PLAYLIST;
 
   const currentSong = playlist[currentSongIndex];
+
+  useEffect(() => {
+    if (currentSongIndex >= playlist.length) {
+      setCurrentSongIndex(0);
+    }
+  }, [currentSongIndex, playlist.length]);
 
   useEffect(() => {
     if (audioRef.current) {
@@ -34,6 +35,8 @@ export function MusicPlayer() {
 
   const handleNext = () => {
     setCurrentSongIndex((prev) => (prev + 1) % playlist.length);
+    // Keep the playlist flowing after each track ends.
+    setIsPlaying(true);
   };
 
   return (

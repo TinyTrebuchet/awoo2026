@@ -1,46 +1,53 @@
-import { useState, useEffect, useCallback } from "react";
+import { useState, useEffect, useCallback, useRef } from "react";
 import confetti from "canvas-confetti";
 import { motion, AnimatePresence } from "framer-motion";
-import { Heart, Stars, RefreshCw } from "lucide-react";
-import { useCompliments } from "@/hooks/use-compliments";
+import { Heart, RefreshCw } from "lucide-react";
 import { Polaroid } from "@/components/Polaroid";
 import { RetroButton } from "@/components/RetroButton";
-import { MusicPlayer } from "@/components/MusicPlayer";
-import LoveBlog from "@/pages/LoveBlog";
+import { COMPLIMENTS, HOME_POLAROID_PHOTOS } from "@shared/app-config";
 
 export default function Home() {
-  const [showBlog, setShowBlog] = useState(false);
   const [noBtnPosition, setNoBtnPosition] = useState({ x: 0, y: 0 });
+  const [noClickCount, setNoClickCount] = useState(0);
   const [valentineStatus, setValentineStatus] = useState<"pending" | "accepted">("pending");
   const [currentCompliment, setCurrentCompliment] = useState("Click the button for love!");
-  
-  const { data: compliments } = useCompliments();
-  
-  // Secret code listener
+  const noHoverTimeoutRef = useRef<ReturnType<typeof setTimeout> | null>(null);
+
   useEffect(() => {
-    let buffer = "";
-    const handleKey = (e: KeyboardEvent) => {
-      buffer += e.key.toLowerCase();
-      if (buffer.length > 20) buffer = buffer.slice(-20);
-      
-      if (buffer.endsWith("love") && !showBlog) {
-        setShowBlog(true);
-        buffer = "";
-      }
-      if (buffer.endsWith("loveyoutoo") && showBlog) {
-        setShowBlog(false);
-        buffer = "";
+    return () => {
+      if (noHoverTimeoutRef.current) {
+        clearTimeout(noHoverTimeoutRef.current);
       }
     };
-    window.addEventListener("keydown", handleKey);
-    return () => window.removeEventListener("keydown", handleKey);
-  }, [showBlog]);
+  }, []);
 
   const handleNoHover = () => {
     const x = Math.random() * 200 - 100;
     const y = Math.random() * 200 - 100;
     setNoBtnPosition({ x, y });
   };
+
+  const queueNoHover = () => {
+    if (noHoverTimeoutRef.current) {
+      clearTimeout(noHoverTimeoutRef.current);
+    }
+    // Small delay lets occasional clicks through before the button runs away.
+    noHoverTimeoutRef.current = setTimeout(handleNoHover, 180);
+  };
+
+  const clearNoHoverQueue = () => {
+    if (noHoverTimeoutRef.current) {
+      clearTimeout(noHoverTimeoutRef.current);
+      noHoverTimeoutRef.current = null;
+    }
+  };
+
+  const handleNoClick = () => {
+    setNoClickCount((prev) => prev + 1);
+    handleNoHover();
+  };
+
+  const isYesFuming = noClickCount > 0 && noClickCount % 10 === 0;
 
   const handleYesClick = () => {
     setValentineStatus("accepted");
@@ -64,23 +71,8 @@ export default function Home() {
   };
 
   const generateCompliment = useCallback(() => {
-    if (compliments && compliments.length > 0) {
-      const random = compliments[Math.floor(Math.random() * compliments.length)];
-      setCurrentCompliment(random.text);
-    } else {
-      const fallbacks = [
-        "Your smile is proof that magic exists.",
-        "You're smarter than Google and prettier than Pinterest.",
-        "If you were a vegetable, you'd be a cute-cumber.",
-        "My life is better with you in it.",
-      ];
-      setCurrentCompliment(fallbacks[Math.floor(Math.random() * fallbacks.length)]);
-    }
-  }, [compliments]);
-
-  if (showBlog) {
-    return <LoveBlog onBack={() => setShowBlog(false)} />;
-  }
+    setCurrentCompliment(COMPLIMENTS[Math.floor(Math.random() * COMPLIMENTS.length)]);
+  }, []);
 
   return (
     <div className="min-h-screen relative overflow-x-hidden pb-32 bg-cream">
@@ -125,22 +117,46 @@ export default function Home() {
                 </h1>
                 
                 <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-12 h-32">
-                  <RetroButton 
-                    onClick={handleYesClick} 
-                    className="text-lg px-8 py-4 bg-primary text-white hover:bg-primary/90"
-                  >
-                    YES ABSOLUTELY!
-                  </RetroButton>
+                  <div className="relative">
+                    {isYesFuming && (
+                      <motion.div
+                        aria-hidden
+                        className="absolute -top-8 left-1/2 -translate-x-1/2 text-xs font-mono text-red-600 whitespace-nowrap"
+                        initial={{ opacity: 0, y: 4 }}
+                        animate={{ opacity: [0.4, 1, 0.4], y: [4, -2, 4] }}
+                        transition={{ duration: 1.2, repeat: Infinity }}
+                      >
+                        <span>fff</span> <span className="text-base">&gt;:(</span> <span>fff</span>
+                      </motion.div>
+                    )}
+                    <motion.div
+                      animate={isYesFuming ? { x: [0, -3, 3, -2, 2, 0] } : { x: 0 }}
+                      transition={isYesFuming ? { duration: 0.45, repeat: Infinity } : { duration: 0.2 }}
+                    >
+                      <RetroButton
+                        onClick={handleYesClick}
+                        className={`text-lg px-8 py-4 text-white ${
+                          isYesFuming
+                            ? "bg-red-500 hover:bg-red-600 border-red-700"
+                            : "bg-primary hover:bg-primary/90"
+                        }`}
+                      >
+                        {isYesFuming ? "YES. STOP CLICKING NO." : "YES ABSOLUTELY!"}
+                      </RetroButton>
+                    </motion.div>
+                  </div>
                   
                   <motion.div
                     animate={{ x: noBtnPosition.x, y: noBtnPosition.y }}
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
-                    onHoverStart={handleNoHover}
+                    onHoverStart={queueNoHover}
+                    onHoverEnd={clearNoHoverQueue}
                   >
                     <RetroButton 
                       variant="secondary"
                       className="text-sm opacity-80"
                       title="Nice try!"
+                      onClick={handleNoClick}
                     >
                       No (Impossible)
                     </RetroButton>
@@ -198,25 +214,15 @@ export default function Home() {
           <div className="relative h-64 flex items-center justify-center">
              <div className="absolute top-0 left-0 w-full h-full border-2 border-gray-300 bg-white/50 backdrop-blur-sm -z-10 rotate-1" />
              <div className="flex -space-x-12 hover:space-x-4 transition-all duration-500">
-                {/* Unsplash placeholders with descriptive alt text */}
-                <Polaroid 
-                  src="https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&h=400&fit=crop" 
-                  caption="Cute Cat" 
-                  rotation={-5} 
-                  delay={0}
-                />
-                <Polaroid 
-                  src="https://pixabay.com/get/g945805de3fef1267b8c3be1a629addcc4f59747e39b5b5ea46cf1dcc30c3b7fa5e3632cbd9e2ecd35e70042ae85893a8aa3d3e96ad301143c6acc39b48e0415b_1280.jpg" 
-                  caption="Our Vibe" 
-                  rotation={3} 
-                  delay={0.1} 
-                />
-                <Polaroid 
-                  src="https://pixabay.com/get/g27378d8074a33604fb36d13b8646b2008c921e19b44004bef327bdcfab1657088864db19356c23db2cbc3a89be74925fded4684f5434e363630248c90ff43bce_1280.jpg" 
-                  caption="Flowers 4 U" 
-                  rotation={-2} 
-                  delay={0.2} 
-                />
+                {HOME_POLAROID_PHOTOS.map((photo) => (
+                  <Polaroid
+                    key={photo.src}
+                    src={photo.src}
+                    caption={photo.caption}
+                    rotation={photo.rotation}
+                    delay={photo.delay}
+                  />
+                ))}
              </div>
           </div>
 

@@ -1,14 +1,16 @@
 import { motion } from "framer-motion";
 import { RetroButton } from "@/components/RetroButton";
-import { Table, TableBody, TableCell, TableHead, TableHeader, TableRow } from "@/components/ui/table";
-import { ScrollArea } from "@/components/ui/scroll-area";
-import { Heart } from "lucide-react";
+import { Heart, Sparkles, Flower2 } from "lucide-react";
+import { useLocation } from "wouter";
+import { LOVE_BLOG_CONTENT } from "@shared/app-config";
 
 interface LoveBlogProps {
-  onBack: () => void;
+  onBack?: () => void;
 }
 
 export default function LoveBlog({ onBack }: LoveBlogProps) {
+  const [, setLocation] = useLocation();
+
   return (
     <div className="min-h-screen p-8 max-w-4xl mx-auto space-y-12 pb-32">
       <motion.header 
@@ -18,7 +20,7 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
       >
         <h1 className="text-4xl md:text-6xl text-primary animate-pulse">
           <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 mr-4 text-red-500 fill-red-500" />
-          The Secret Blog
+          My Secret Love Blog
           <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 ml-4 text-red-500 fill-red-500" />
         </h1>
         <p className="font-serif italic text-lg text-muted-foreground">
@@ -26,95 +28,72 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
         </p>
       </motion.header>
 
-      <div className="grid md:grid-cols-2 gap-12">
-        {/* Letter Section */}
-        <motion.div 
-          initial={{ x: -50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.2 }}
-          className="bg-paper-white p-6 shadow-[5px_5px_0px_0px_rgba(0,0,0,0.1)] border border-gray-200 rotate-[-1deg]"
-        >
-          <h2 className="text-2xl mb-4 font-handwriting text-3xl border-b border-gray-300 pb-2">My Dearest Manshika,</h2>
-          <p className="font-handwriting text-2xl leading-relaxed text-gray-800">
-            If you found this page, you know the password is love. That's pretty much the summary of everything I do. 
-            I built this weird little digital garden just for you because regular cards are boring and I wanted to make something
-            that feels as unique as you are.
-            <br/><br/>
-            I promise to always debug your code (or at least try), listen to your playlists, and share my fries.
-            <br/><br/>
-            Yours,<br/>
-            Simp #1
-          </p>
-        </motion.div>
-
-        {/* Stats Table */}
-        <motion.div 
-          initial={{ x: 50, opacity: 0 }}
-          animate={{ x: 0, opacity: 1 }}
-          transition={{ delay: 0.4 }}
-          className="bg-white border-2 border-vintage-black p-4 shadow-[8px_8px_0px_0px_var(--vintage-black)]"
-        >
-          <h3 className="text-sm font-display mb-4 bg-vintage-black text-white p-2 inline-block">Progress Report: Feb 2024</h3>
-          <ScrollArea className="h-[300px] border border-gray-200">
-            <Table>
-              <TableHeader>
-                <TableRow>
-                  <TableHead className="font-bold">Metric</TableHead>
-                  <TableHead className="font-bold text-right">Value</TableHead>
-                  <TableHead className="font-bold text-right">Status</TableHead>
-                </TableRow>
-              </TableHeader>
-              <TableBody className="font-mono text-sm">
-                {[
-                  { metric: "Simp Rate", value: "110%", status: "CRITICAL" },
-                  { metric: "Cute Aggression", value: "High", status: "STABLE" },
-                  { metric: "Miss You Hours", value: "24/7", status: "CONSTANT" },
-                  { metric: "Date Nights Planned", value: "∞", status: "PENDING" },
-                  { metric: "Hugs Distributed", value: "Not Enough", status: "LOW" },
-                  { metric: "Jokes Laughed At", value: "All", status: "GOOD" },
-                ].map((row, i) => (
-                  <TableRow key={i}>
-                    <TableCell>{row.metric}</TableCell>
-                    <TableCell className="text-right">{row.value}</TableCell>
-                    <TableCell className="text-right text-green-600">{row.status}</TableCell>
-                  </TableRow>
-                ))}
-              </TableBody>
-            </Table>
-          </ScrollArea>
-        </motion.div>
-      </div>
-
-      {/* Dictionary */}
       <motion.div 
-        initial={{ y: 50, opacity: 0 }}
+        initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
-        transition={{ delay: 0.6 }}
-        className="bg-sage/20 border-2 border-sage border-dashed p-8 rounded-lg"
+        transition={{ delay: 0.2 }}
+        className="relative bg-paper-white border-2 border-dustyRose/50 p-8 md:p-10 rounded-lg shadow-[10px_10px_0px_0px_rgba(220,174,150,0.35)] overflow-hidden"
       >
-        <h3 className="font-display text-lg text-secondary-foreground mb-6">Manshika-to-English Dictionary</h3>
-        <div className="grid md:grid-cols-3 gap-6 font-mono text-sm">
-          <div className="bg-white p-4 shadow-sm">
-            <strong className="block text-accent mb-1">"I'm fine"</strong>
-            <span className="text-gray-600">Translation: I require immediate attention and possibly chocolate.</span>
-          </div>
-          <div className="bg-white p-4 shadow-sm">
-            <strong className="block text-accent mb-1">"Whatever"</strong>
-            <span className="text-gray-600">Translation: I have a strong opinion but I'm testing you.</span>
-          </div>
-          <div className="bg-white p-4 shadow-sm">
-            <strong className="block text-accent mb-1">"Do what you want"</strong>
-            <span className="text-gray-600">Translation: DANGER. Do NOT do what you want.</span>
+        <div className="absolute top-4 right-4 text-pink-500 rotate-12 opacity-80">
+          <Sparkles className="w-6 h-6" />
+        </div>
+        <div className="absolute top-16 right-12 text-rose-400 -rotate-6 opacity-70">
+          <Heart className="w-5 h-5 fill-current" />
+        </div>
+        <div className="absolute -bottom-8 -right-8 h-36 w-36 bg-pink-200/40 rounded-full blur-2xl" />
+        <div className="absolute -top-8 -left-8 h-32 w-32 bg-rose-200/35 rounded-full blur-2xl" />
+
+        <div className="relative z-10">
+          <p className="font-mono text-xs text-gray-500 uppercase tracking-wider mb-3">
+            {LOVE_BLOG_CONTENT.entryLabel}
+          </p>
+          <h2 className="text-3xl md:text-4xl mb-6 font-handwriting text-primary border-b border-dustyRose/50 pb-2">
+            {LOVE_BLOG_CONTENT.heading}
+          </h2>
+          <p className="font-handwriting text-2xl md:text-3xl leading-relaxed text-gray-800">
+            {LOVE_BLOG_CONTENT.body[0]} {LOVE_BLOG_CONTENT.body[1]}
+            <br /><br />
+            {LOVE_BLOG_CONTENT.body[2]}
+            <br /><br />
+            {LOVE_BLOG_CONTENT.body[3]}
+            <br /><br />
+            {LOVE_BLOG_CONTENT.signoffLine1}
+            <br />
+            {LOVE_BLOG_CONTENT.signoffLine2}
+          </p>
+          <div className="mt-6 flex items-center gap-3">
+            <Flower2 className="w-6 h-6 text-sage rotate-6 opacity-80 shrink-0" />
+            <div className="inline-flex items-center gap-2 bg-white/70 border border-dustyRose px-3 py-2 text-xs font-mono text-dustyRose">
+              <Heart className="w-3 h-3 fill-current" />
+              {LOVE_BLOG_CONTENT.sealText}
+            </div>
           </div>
         </div>
       </motion.div>
 
-      <div className="text-center pt-8">
-        <RetroButton onClick={onBack} variant="primary">
-          Back to Reality
-        </RetroButton>
+      <motion.div
+        initial={{ opacity: 0, y: 8 }}
+        animate={{ opacity: 1, y: 0 }}
+        transition={{ delay: 0.35 }}
+        className="bg-white/60 border border-dashed border-sage p-5 rounded-md"
+      >
+        <p className="text-sm font-mono text-center text-gray-600">
+          {LOVE_BLOG_CONTENT.psText}
+        </p>
+      </motion.div>
+
+      <div className="text-center pt-2">
+        {onBack ? (
+          <RetroButton onClick={onBack} variant="primary">
+            Back to Reality
+          </RetroButton>
+        ) : (
+          <RetroButton onClick={() => setLocation("/")} variant="primary">
+            Back to Home
+          </RetroButton>
+        )}
         <p className="mt-4 text-xs font-mono text-gray-500">
-          (Type "love you too" to return home quickly)
+          {LOVE_BLOG_CONTENT.hideHint}
         </p>
       </div>
     </div>

@@ -1,12 +1,9 @@
 import { Polaroid } from "@/components/Polaroid";
-import { motion } from "framer-motion";
+import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
+import { GALLERY_SECTIONS } from "@shared/app-config";
 
 export default function Gallery() {
-  const sections = [
-    { title: "Me", description: "Just a simp in his natural habitat." },
-    { title: "You", description: "The reason for the simp's existence." },
-    { title: "Me & You", description: "The best combination since Ctrl+C and Ctrl+V." },
-  ];
+  const sections = GALLERY_SECTIONS;
 
   return (
     <div className="min-h-screen p-8 bg-cream">
@@ -16,28 +13,49 @@ export default function Gallery() {
           <p className="font-mono text-sm opacity-60">Memory.exe [Status: Loading...]</p>
         </header>
 
-        <div className="grid md:grid-cols-3 gap-12">
-          {sections.map((section, idx) => (
-            <div key={section.title} className="flex flex-col items-center">
-              <div className="bg-white/50 p-4 border-2 border-dashed border-sage mb-4 w-full text-center">
-                <h2 className="text-xl font-display mb-2">{section.title}</h2>
-                <p className="font-handwriting text-lg text-dustyRose">{section.description}</p>
+        <Tabs defaultValue="me" className="w-full">
+          <TabsList className="w-full md:w-auto h-auto flex-wrap gap-2 bg-sage/15">
+            {sections.map((section) => (
+              <TabsTrigger
+                key={section.id}
+                value={section.id}
+                className="font-display data-[state=active]:bg-white data-[state=active]:border data-[state=active]:border-dustyRose"
+              >
+                {section.title}
+              </TabsTrigger>
+            ))}
+          </TabsList>
+
+          {sections.map((section) => (
+            <TabsContent key={section.id} value={section.id}>
+              <div className="bg-white/50 p-4 border-2 border-dashed border-sage my-6 text-center">
+                <h2 className="text-2xl font-display mb-2">{section.title}</h2>
+                <p className="font-handwriting text-xl text-dustyRose">{section.description}</p>
               </div>
-              
-              <div className="relative group">
-                <div className="absolute inset-0 bg-vintageBlack/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
-                  <span className="bg-white px-3 py-1 font-mono text-xs border border-vintageBlack">DEVELOPING...</span>
-                </div>
-                <Polaroid 
-                  src={`https://images.unsplash.com/photo-1518199266791-5375a83190b7?w=400&h=400&fit=crop&q=10&blur=50`} 
-                  caption="Coming Soon..." 
-                  rotation={idx % 2 === 0 ? 3 : -3}
-                />
+
+              <div className="grid sm:grid-cols-2 lg:grid-cols-3 gap-8 place-items-center">
+                {section.photos.map((photo, idx) => (
+                  <div key={`${section.id}-${idx}`} className="relative group">
+                    <div className="absolute inset-0 bg-vintageBlack/5 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity z-10 pointer-events-none">
+                      <span className="bg-white px-3 py-1 font-mono text-xs border border-vintageBlack">DEVELOPING...</span>
+                    </div>
+                    <Polaroid
+                      src={photo.src}
+                      caption={photo.caption}
+                      rotation={idx % 2 === 0 ? 3 : -3}
+                    />
+                  </div>
+                ))}
               </div>
-              <p className="mt-4 font-mono text-[10px] text-sage">File size: [Pending Capture]</p>
-            </div>
+
+              {section.id === "us" && (
+                <p className="mt-6 text-center font-mono text-xs text-sage">
+                  Shared memories are loading... first date mission pending.
+                </p>
+              )}
+            </TabsContent>
           ))}
-        </div>
+        </Tabs>
       </div>
     </div>
   );

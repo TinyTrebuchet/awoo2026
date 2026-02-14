@@ -1,15 +1,18 @@
 import { Link, useLocation } from "wouter";
 import { Heart, Image as ImageIcon, FileText, BookOpen, Home } from "lucide-react";
 import { cn } from "@/lib/utils";
+import { useLoveUnlock } from "@/context/love-unlock";
 
 export function Navbar() {
   const [location] = useLocation();
+  const { loveUnlocked } = useLoveUnlock();
 
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/gallery", label: "Gallery", icon: ImageIcon },
     { href: "/reports", label: "Reports", icon: FileText },
     { href: "/guestbook", label: "Guestbook", icon: BookOpen },
+    ...(loveUnlocked ? [{ href: "/love", label: "LOVE", icon: Heart }] : []),
   ];
 
   return (
