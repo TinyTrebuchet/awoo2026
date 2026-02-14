@@ -49,7 +49,8 @@ export function LoveUnlockProvider({ children }: LoveUnlockProviderProps) {
 export function useLoveUnlock() {
   const context = useContext(LoveUnlockContext);
   if (!context) {
-    throw new Error("useLoveUnlock must be used within LoveUnlockProvider");
+    // Avoid hard crashes during transient HMR provider mismatches.
+    return { loveUnlocked: false };
   }
   return context;
 }

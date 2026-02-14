@@ -1,5 +1,5 @@
 import { Link, useLocation } from "wouter";
-import { Heart, Image as ImageIcon, FileText, BookOpen, Home } from "lucide-react";
+import { Heart, Image as ImageIcon, FileText, BookOpen, Home, ListMusic } from "lucide-react";
 import { cn } from "@/lib/utils";
 import { useLoveUnlock } from "@/context/love-unlock";
 
@@ -10,6 +10,7 @@ export function Navbar() {
   const navItems = [
     { href: "/", label: "Home", icon: Home },
     { href: "/gallery", label: "Gallery", icon: ImageIcon },
+    { href: "/playlist", label: "Playlist", icon: ListMusic },
     { href: "/reports", label: "Reports", icon: FileText },
     { href: "/guestbook", label: "Guestbook", icon: BookOpen },
     ...(loveUnlocked ? [{ href: "/love", label: "LOVE", icon: Heart }] : []),

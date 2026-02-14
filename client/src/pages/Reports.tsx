@@ -3,14 +3,15 @@ import { Card } from "@/components/ui/card";
 
 export default function Reports() {
   const dictionary = [
-    { term: "I'm fine", meaning: "I am definitely not fine and you should know why." },
-    { term: "Do whatever you want", meaning: "Do exactly what I want, not what you want." },
-    { term: "Whatever", meaning: "I've run out of words to describe how wrong you are." },
-    { term: "I'm sleepy", meaning: "Stay awake and talk to me for 3 more hours please." },
+    { term: "Haa vo to hai", meaning: "I didn't pay attention to what you just said." },
+    { term: "Yes yes I'm toh fine", meaning: "You better double check, I might infact NOT be fine." },
+    { term: "Good onlyy", meaning: "I want to talk to you more <3" },
+    { term: "Ab aisa krega", meaning: "Female in male dominated field. Ab to teri fielding set..." },
+    { term: "Interesting", meaning: "Interesting indeed!" },
   ];
 
   return (
-    <div className="min-h-screen p-4 sm:p-8 bg-cream">
+    <div className="min-h-screen p-4 sm:p-8">
       <div className="container mx-auto max-w-4xl space-y-12">
         <section className="bg-white p-4 sm:p-8 border-4 border-double border-dustyRose shadow-[8px_8px_0px_0px_rgba(220,174,150,0.5)]">
           <header className="border-b-2 border-sage pb-4 mb-6 flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between sm:items-end">
@@ -29,16 +30,16 @@ export default function Reports() {
                 <p className="text-xs font-bold uppercase text-sage mb-1">Status Summary</p>
                 <div className="space-y-2 font-mono text-sm">
                   <div className="flex justify-between border-b border-sage/20 pb-1">
-                    <span>Days since meeting:</span>
-                    <span className="font-bold">30</span>
+                    <span>Days since we first met:</span>
+                    <span className="font-bold">57</span>
                   </div>
                   <div className="flex justify-between border-b border-sage/20 pb-1">
-                    <span>Total "GM" Texts:</span>
-                    <span className="font-bold">30/30 (Perfect Score)</span>
+                    <span>Times called "cuteeu":</span>
+                    <span className="font-bold">131 (Too less)</span>
                   </div>
                   <div className="flex justify-between border-b border-sage/20 pb-1">
                     <span>Probability of simp:</span>
-                    <span className="text-primary font-bold">100%</span>
+                    <span className="text-primary font-bold">99.9%</span>
                   </div>
                 </div>
               </div>
@@ -53,7 +54,7 @@ export default function Reports() {
 
             <div className="flex flex-col justify-center items-center p-6 border-2 border-dashed border-dustyRose">
               <div className="w-32 h-32 rounded-full border-8 border-dustyRose flex items-center justify-center relative">
-                <span className="text-2xl font-bold">100%</span>
+                <span className="text-2xl font-bold">99.9%</span>
                 <motion.div 
                   className="absolute inset-0 border-8 border-primary rounded-full border-t-transparent border-l-transparent"
                   animate={{ rotate: 360 }}

@@ -35,7 +35,7 @@ export default function Guestbook() {
   };
 
   return (
-    <div className="min-h-screen p-4 sm:p-8 bg-cream flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen p-4 sm:p-8 flex items-center justify-center overflow-hidden">
       <AnimatePresence>
         {!isAnimating ? (
           <motion.div 

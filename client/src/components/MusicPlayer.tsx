@@ -1,43 +1,9 @@
-import { useState, useRef, useEffect } from "react";
-import { Play, Pause, SkipForward, Volume2, Disc } from "lucide-react";
+import { Pause, Play, SkipBack, SkipForward, Volume2, Disc } from "lucide-react";
 import { motion } from "framer-motion";
-import { MUSIC_PLAYER_PLAYLIST } from "@shared/app-config";
+import { usePlayer } from "@/context/player-context";
 
 export function MusicPlayer() {
-  const [isPlaying, setIsPlaying] = useState(false);
-  const [currentSongIndex, setCurrentSongIndex] = useState(0);
-  const [volume, setVolume] = useState(0.5);
-  const audioRef = useRef<HTMLAudioElement | null>(null);
-
-  const playlist = MUSIC_PLAYER_PLAYLIST;
-
-  const currentSong = playlist[currentSongIndex];
-
-  useEffect(() => {
-    if (currentSongIndex >= playlist.length) {
-      setCurrentSongIndex(0);
-    }
-  }, [currentSongIndex, playlist.length]);
-
-  useEffect(() => {
-    if (audioRef.current) {
-      audioRef.current.volume = volume;
-    }
-  }, [volume]);
-
-  useEffect(() => {
-    if (isPlaying) {
-      audioRef.current?.play().catch(() => setIsPlaying(false));
-    } else {
-      audioRef.current?.pause();
-    }
-  }, [isPlaying, currentSong]);
-
-  const handleNext = () => {
-    setCurrentSongIndex((prev) => (prev + 1) % playlist.length);
-    // Keep the playlist flowing after each track ends.
-    setIsPlaying(true);
-  };
+  const { currentSong, isPlaying, volume, setVolume, togglePlay, next, prev } = usePlayer();
 
   return (
     <div className="fixed bottom-2 sm:bottom-4 left-2 right-2 sm:left-auto sm:right-4 z-40 sm:w-64 bg-[#c0c0c0] border-2 border-t-white border-l-white border-r-[#808080] border-b-[#808080] p-1 shadow-xl font-sans text-xs">
@@ -49,12 +15,6 @@ export function MusicPlayer() {
           <button className="bg-[#c0c0c0] text-black w-3 h-3 flex items-center justify-center border border-t-white border-l-white border-r-[#808080] border-b-[#808080]">x</button>
         </div>
       </div>
-
-      <audio 
-        ref={audioRef} 
-        src={currentSong.url} 
-        onEnded={handleNext}
-      />
 
       {/* Display */}
       <div className="bg-black text-[#00ff00] font-mono p-2 mb-2 border-2 border-inset border-[#808080] h-12 flex items-center justify-between overflow-hidden">
@@ -71,15 +31,23 @@ export function MusicPlayer() {
 
       {/* Controls */}
       <div className="flex items-center justify-between gap-2">
+        <button
+          onClick={prev}
+          className="p-1 active:translate-y-[1px]"
+          aria-label="Previous track"
+        >
+          <SkipBack className="w-4 h-4" />
+        </button>
         <button 
-          onClick={() => setIsPlaying(!isPlaying)}
+          onClick={togglePlay}
           className="p-1 active:translate-y-[1px]"
         >
           {isPlaying ? <Pause className="w-4 h-4" /> : <Play className="w-4 h-4" />}
         </button>
         <button 
-          onClick={handleNext}
+          onClick={next}
           className="p-1 active:translate-y-[1px]"
+          aria-label="Next track"
         >
           <SkipForward className="w-4 h-4" />
         </button>

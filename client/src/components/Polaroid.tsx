@@ -1,20 +1,33 @@
 import { motion } from "framer-motion";
+import { cn } from "@/lib/utils";
 
 interface PolaroidProps {
   src: string;
   caption: string;
   rotation?: number;
   delay?: number;
+  hoverScale?: number;
+  className?: string;
 }
 
-export function Polaroid({ src, caption, rotation = 0, delay = 0 }: PolaroidProps) {
+export function Polaroid({
+  src,
+  caption,
+  rotation = 0,
+  delay = 0,
+  hoverScale = 1.1,
+  className,
+}: PolaroidProps) {
   return (
     <motion.div
       initial={{ opacity: 0, scale: 0.8, rotate: 0 }}
       animate={{ opacity: 1, scale: 1, rotate: rotation }}
       transition={{ delay, duration: 0.5, type: "spring" }}
-      whileHover={{ scale: 1.1, rotate: 0, zIndex: 10, filter: "none" }}
-      className="bg-white p-2.5 sm:p-3 pb-7 sm:pb-8 shadow-lg w-40 sm:w-48 inline-block transform transition-all duration-300 relative group"
+      whileHover={{ scale: hoverScale, rotate: 0, zIndex: 10, filter: "none" }}
+      className={cn(
+        "bg-white p-2 sm:p-2.5 pb-6 sm:pb-7 shadow-lg w-44 sm:w-56 inline-block transform transition-all duration-300 relative group",
+        className,
+      )}
       style={{ filter: "sepia(0.3) contrast(1.1) brightness(1.1)" }}
     >
       <div className="aspect-square bg-gray-200 overflow-hidden border border-gray-100 relative">

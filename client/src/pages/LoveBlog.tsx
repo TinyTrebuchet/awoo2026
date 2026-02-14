@@ -18,11 +18,27 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
         animate={{ y: 0, opacity: 1 }}
         className="text-center space-y-4 border-b-4 border-double border-dusty-rose pb-8"
       >
-        <h1 className="text-3xl sm:text-4xl md:text-6xl text-primary animate-pulse">
-          <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 mr-4 text-red-500 fill-red-500" />
-          My Secret Love Blog
-          <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 ml-4 text-red-500 fill-red-500" />
-        </h1>
+        <div className="flex items-center justify-center gap-2 sm:gap-4">
+          <div className="hidden sm:flex h-px w-10 md:w-14 bg-dustyRose/60" />
+          <motion.div
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 2.2, repeat: Infinity }}
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-rose-100 border border-dustyRose/70 flex items-center justify-center shadow-sm"
+          >
+            <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 fill-red-500" />
+          </motion.div>
+          <h1 className="px-4 sm:px-6 py-2 sm:py-2.5 border border-dustyRose/60 bg-white/70 rounded-2xl text-2xl sm:text-4xl md:text-5xl text-primary font-display shadow-[4px_4px_0px_0px_rgba(220,174,150,0.35)]">
+            My Secret Love Blog
+          </h1>
+          <motion.div
+            animate={{ y: [0, -2, 0] }}
+            transition={{ duration: 2.2, repeat: Infinity, delay: 0.3 }}
+            className="w-8 h-8 sm:w-10 sm:h-10 rounded-full bg-rose-100 border border-dustyRose/70 flex items-center justify-center shadow-sm"
+          >
+            <Heart className="w-4 h-4 sm:w-5 sm:h-5 text-red-500 fill-red-500" />
+          </motion.div>
+          <div className="hidden sm:flex h-px w-10 md:w-14 bg-dustyRose/60" />
+        </div>
         <p className="font-serif italic text-lg text-muted-foreground">
           "Confidential Files: Project Valentine"
         </p>
@@ -50,21 +66,27 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
           <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-handwriting text-primary border-b border-dustyRose/50 pb-2">
             {LOVE_BLOG_CONTENT.heading}
           </h2>
-          <p className="font-handwriting text-xl sm:text-2xl md:text-3xl leading-relaxed text-gray-800">
-            {LOVE_BLOG_CONTENT.body[0]} {LOVE_BLOG_CONTENT.body[1]}
-            <br /><br />
-            {LOVE_BLOG_CONTENT.body[2]}
-            <br /><br />
-            {LOVE_BLOG_CONTENT.body[3]}
-            <br /><br />
-            {LOVE_BLOG_CONTENT.signoffLine1}
-            <br />
-            {LOVE_BLOG_CONTENT.signoffLine2}
-          </p>
-          <div className="mt-6 flex items-center gap-3">
-            <Flower2 className="w-6 h-6 text-sage rotate-6 opacity-80 shrink-0" />
-            <div className="inline-flex items-center gap-2 bg-white/70 border border-dustyRose px-3 py-2 text-xs font-mono text-dustyRose">
-              <Heart className="w-3 h-3 fill-current" />
+          <div className="space-y-4 sm:space-y-5">
+            {LOVE_BLOG_CONTENT.body
+              .split(/\n{2,}/)
+              .map((paragraph, idx) => (
+                <p
+                  key={`${paragraph.slice(0, 24)}-${idx}`}
+                  className="font-handwriting text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-800"
+                >
+                  {paragraph}
+                </p>
+              ))}
+            <p className="font-handwriting text-lg sm:text-xl md:text-2xl leading-relaxed text-gray-800 pt-2">
+              {LOVE_BLOG_CONTENT.signoffLine1}
+              <br />
+              {LOVE_BLOG_CONTENT.signoffLine2}
+            </p>
+          </div>
+          <div className="mt-6 flex items-center gap-2.5 text-vintageBlack/80">
+            <Flower2 className="w-5 h-5 rotate-6 opacity-80 shrink-0 text-sage" />
+            <div className="inline-flex items-center gap-1.5 bg-white/90 border border-vintageBlack/40 px-3 py-1.5 text-[11px] font-mono uppercase tracking-wide text-vintageBlack rounded-sm shadow-sm">
+              <Heart className="w-3 h-3 text-dustyRose fill-dustyRose" />
               {LOVE_BLOG_CONTENT.sealText}
             </div>
           </div>

@@ -4,7 +4,25 @@ import { motion, AnimatePresence } from "framer-motion";
 import { Heart, RefreshCw } from "lucide-react";
 import { Polaroid } from "@/components/Polaroid";
 import { RetroButton } from "@/components/RetroButton";
-import { COMPLIMENTS, HOME_POLAROID_PHOTOS } from "@shared/app-config";
+import {
+  COMPLIMENTS,
+  VALENTINE_ACCEPTED_SCENE,
+} from "@shared/app-config";
+
+const HOME_FEATURED_POLAROIDS = [
+  {
+    src: "/photos/me/WhatsApp%20Image%202026-02-14%20at%2016.23.38%20(2).jpeg",
+    caption: "Me",
+    rotation: -4,
+    delay: 0,
+  },
+  {
+    src: "/photos/you/WhatsApp%20Image%202026-02-14%20at%2017.05.37%20(2).jpeg",
+    caption: "You",
+    rotation: 4,
+    delay: 0.1,
+  },
+] as const;
 
 export default function Home() {
   const [noBtnPosition, setNoBtnPosition] = useState({ x: 0, y: 0 });
@@ -77,7 +95,7 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden pb-36 sm:pb-32 bg-cream">
+    <div className="min-h-screen relative overflow-x-hidden pb-36 sm:pb-32">
       <div className="scanlines" />
 
       {/* Hero Section */}
@@ -103,7 +121,11 @@ export default function Home() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white/80 backdrop-blur-sm p-5 sm:p-8 md:p-12 border-4 border-double border-dusty-rose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] text-center max-w-2xl w-full">
+        <div
+          className={`bg-white/80 backdrop-blur-sm p-5 sm:p-8 md:p-12 border-4 border-double border-dusty-rose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] text-center w-full ${
+            valentineStatus === "accepted" ? "max-w-5xl" : "max-w-2xl"
+          }`}
+        >
           <AnimatePresence mode="wait">
             {valentineStatus === "pending" ? (
               <motion.div
@@ -172,23 +194,64 @@ export default function Home() {
                 key="accepted"
                 initial={{ opacity: 0, scale: 0.5 }}
                 animate={{ opacity: 1, scale: 1 }}
-                className="space-y-6"
+                className="space-y-4 sm:space-y-5 relative rounded-md px-0.5 sm:px-1 py-2"
               >
-                <h2 className="text-4xl md:text-6xl text-primary animate-bounce">YAY! ❤️</h2>
-                <p className="font-handwriting text-3xl">Best decision you ever made.</p>
-                <div className="flex justify-center gap-4 text-4xl">
-                  <span>🎉</span><span>🍫</span><span>🌹</span>
+                <h2 className="relative z-10 text-3xl sm:text-4xl md:text-5xl text-primary animate-bounce text-center">
+                  {VALENTINE_ACCEPTED_SCENE.headline.replace("❤️", "").trim()}
+                </h2>
+
+                <div className="relative z-10 grid md:grid-cols-[1.15fr_1fr] gap-4 md:gap-5 items-stretch text-left">
+                  <div className="relative border border-dustyRose/50 bg-white/85 overflow-hidden min-h-[320px] md:min-h-[420px]">
+                    <img
+                      src="/heart.png"
+                      alt="Heart"
+                      className="absolute inset-0 w-full h-full object-cover"
+                    />
+                    <div className="absolute top-0 left-0 right-0 m-3 sm:m-4 p-3 sm:p-4 space-y-2 text-center md:text-left bg-white/78 rounded-md">
+                      <p className="font-mono text-sm text-vintageBlack font-semibold">
+                        {VALENTINE_ACCEPTED_SCENE.subline}
+                      </p>
+                      <p className="font-handwriting text-2xl md:text-3xl">
+                        {VALENTINE_ACCEPTED_SCENE.promiseLine}
+                      </p>
+                    </div>
+                  </div>
+
+                  <div className="bg-white/80 border border-dustyRose/50 p-4 h-full flex flex-col">
+                    <p className="font-mono text-[11px] uppercase tracking-wider text-dustyRose mb-3">
+                      Timeline: Month One
+                    </p>
+                    <div className="space-y-3 flex-1">
+                      {VALENTINE_ACCEPTED_SCENE.timelineEvents.map((event, idx) => (
+                        <motion.div
+                          key={`${event.title}-${idx}`}
+                          initial={{ opacity: 0, x: -10 }}
+                          animate={{ opacity: 1, x: 0 }}
+                          transition={{ delay: 0.2 + idx * 0.15 }}
+                          className="grid grid-cols-[16px_1fr] gap-2 items-start"
+                        >
+                          <div className="mt-1.5 w-2.5 h-2.5 rounded-full bg-primary" />
+                          <div>
+                            <p className="font-display text-sm text-vintageBlack">
+                              {event.title}
+                            </p>
+                            <p className="font-mono text-[10px] text-gray-500">{event.date}</p>
+                          </div>
+                        </motion.div>
+                      ))}
+                    </div>
+                    <p className="mt-4 font-mono text-[11px] text-sage">
+                      {VALENTINE_ACCEPTED_SCENE.futureLine}
+                    </p>
+                  </div>
                 </div>
-                <p className="text-sm font-mono text-gray-500 mt-8">
-                  (Type "LOVE" on your keyboard for a secret surprise)
-                </p>
               </motion.div>
             )}
           </AnimatePresence>
         </div>
 
         {/* Interactive Modules */}
-        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 mt-14 sm:mt-24 w-full max-w-5xl">
+        <div className="grid md:grid-cols-2 items-start gap-8 sm:gap-12 mt-14 sm:mt-24 w-full max-w-5xl">
           
           {/* Compliment Generator */}
           <div className="bg-paper-white p-6 border-2 border-sage border-dashed relative">
@@ -215,19 +278,20 @@ export default function Home() {
           </div>
 
           {/* Polaroid Gallery */}
-          <div className="relative min-h-[14rem] sm:h-64 flex items-center justify-center overflow-hidden">
-             <div className="absolute top-0 left-0 w-full h-full border-2 border-gray-300 bg-white/50 backdrop-blur-sm -z-10 rotate-1" />
-             <div className="flex scale-90 sm:scale-100 -space-x-8 sm:-space-x-12 hover:space-x-2 sm:hover:space-x-4 transition-all duration-500">
-                {HOME_POLAROID_PHOTOS.map((photo) => (
-                  <Polaroid
-                    key={photo.src}
-                    src={photo.src}
-                    caption={photo.caption}
-                    rotation={photo.rotation}
-                    delay={photo.delay}
-                  />
-                ))}
-             </div>
+          <div className="relative py-2 sm:py-4 flex items-center justify-center">
+            <div className="flex flex-nowrap items-center justify-center gap-3 sm:gap-5">
+              {HOME_FEATURED_POLAROIDS.map((photo) => (
+                <Polaroid
+                  key={photo.src}
+                  src={photo.src}
+                  caption={photo.caption}
+                  rotation={photo.rotation}
+                  delay={photo.delay}
+                  hoverScale={1.03}
+                  className="w-32 sm:w-44 md:w-48"
+                />
+              ))}
+            </div>
           </div>
 
         </div>
