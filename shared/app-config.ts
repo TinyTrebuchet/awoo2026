@@ -163,9 +163,9 @@ export const VALENTINE_ACCEPTED_SCENE = {
   backgroundPhoto:
     "/photos/me/WhatsApp%20Image%202026-02-14%20at%2016.23.36.jpeg",
   timelineEvents: [
-    { title: "Met on Hinge", date: "Jan 12, 2026" },
-    { title: "Exchanged numbers", date: "Jan 15, 2026" },
-    { title: "Talked till 4 AM", date: "Jan 26, 2026" },
+    { title: "Met on Hinge", date: "Dec 19, 2025" },
+    { title: "Exchanged numbers", date: "Dec 25, 2025" },
+    { title: "Talked till 4 AM", date: "Jan 31, 2026" },
     { title: "First valentine's", date: "Feb 14, 2026" },
   ],
   futureLine: ">>> many more chapters loading...",

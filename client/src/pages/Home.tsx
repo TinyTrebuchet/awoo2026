@@ -11,7 +11,7 @@ import {
 
 const HOME_FEATURED_POLAROIDS = [
   {
-    src: "/photos/me/WhatsApp%20Image%202026-02-14%20at%2016.23.38%20(2).jpeg",
+    src: "/photos/me/WhatsApp%20Image%202026-02-14%20at%2016.23.37%20(2).jpeg",
     caption: "Me",
     rotation: -4,
     delay: 0,
