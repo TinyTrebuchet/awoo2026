@@ -114,8 +114,8 @@ export default function Home() {
                 className="space-y-8"
               >
                 <h1 className="text-2xl sm:text-3xl md:text-5xl leading-tight text-vintage-black">
-                  Manshika,<br />
-                  <span className="text-primary text-xl md:text-3xl mt-4 block">will you be my Valentine?</span>
+                  Hi Manshika,<br />
+                  <span className="text-primary text-xl md:text-3xl mt-4 block">will you be my Valentine? </span>
                 </h1>
                 
                 <div className="flex flex-col md:flex-row gap-4 sm:gap-6 justify-center items-center mt-8 sm:mt-12 min-h-[8rem] sm:h-32 w-full">
@@ -128,7 +128,7 @@ export default function Home() {
                         animate={{ opacity: [0.4, 1, 0.4], y: [4, -2, 4] }}
                         transition={{ duration: 1.2, repeat: Infinity }}
                       >
-                        <span>fff</span> <span className="text-base">&gt;:(</span> <span>fff</span>
+                        <span>grrr</span> <span className="text-base">&gt;:(</span> <span>grrr</span>
                       </motion.div>
                     )}
                     <motion.div
@@ -144,7 +144,7 @@ export default function Home() {
                             : "bg-primary hover:bg-primary/90"
                         }`}
                       >
-                        {isYesFuming ? "YES. STOP CLICKING NO." : "YES ABSOLUTELY!"}
+                        {isYesFuming ? "STOP CLICKING NO!" : "YES ABSOLUTELY!"}
                       </RetroButton>
                     </motion.div>
                   </div>
