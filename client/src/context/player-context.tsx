@@ -7,7 +7,11 @@ import {
   useState,
   type ReactNode,
 } from "react";
-import { MUSIC_PLAYER_PLAYLIST, type PlaylistTrack } from "@shared/app-config";
+import {
+  MUSIC_PLAYER_PLAYLIST,
+  SECRET_PLAYLIST_TRACK,
+  type PlaylistTrack,
+} from "@shared/app-config";
 
 const PLAYER_STORAGE_KEY = "awoo-player-state-v1";
 
@@ -20,6 +24,7 @@ interface PersistedPlayerState {
 
 interface PlayerContextValue {
   playlist: PlaylistTrack[];
+  basePlaylistLength: number;
   currentSongIndex: number;
   currentSong: PlaylistTrack;
   isPlaying: boolean;
@@ -34,6 +39,9 @@ interface PlayerContextValue {
   prev: () => void;
   playTrackAt: (index: number) => void;
   seekTo: (seconds: number) => void;
+  secretUnlocked: boolean;
+  secretTapCount: number;
+  registerSecretTap: () => void;
 }
 
 const PlayerContext = createContext<PlayerContextValue | undefined>(undefined);
@@ -47,7 +55,16 @@ const FALLBACK_TRACK: PlaylistTrack = {
 };
 
 export function PlayerProvider({ children }: { children: ReactNode }) {
-  const playlist = MUSIC_PLAYER_PLAYLIST;
+  const basePlaylistLength = MUSIC_PLAYER_PLAYLIST.length;
+  const [secretUnlocked, setSecretUnlocked] = useState(false);
+  const [secretTapCount, setSecretTapCount] = useState(0);
+  const playlist = useMemo(
+    () =>
+      secretUnlocked
+        ? [...MUSIC_PLAYER_PLAYLIST, SECRET_PLAYLIST_TRACK]
+        : MUSIC_PLAYER_PLAYLIST,
+    [secretUnlocked],
+  );
   const [currentSongIndex, setCurrentSongIndex] = useState(0);
   const [isPlaying, setIsPlaying] = useState(true);
   const [volume, setVolume] = useState(0.5);
@@ -154,9 +171,24 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     setCurrentTime(target);
   };
 
+  const registerSecretTap = () => {
+    if (secretUnlocked) {
+      return;
+    }
+    setSecretTapCount((prev) => {
+      const next = prev + 1;
+      if (next >= 5) {
+        setSecretUnlocked(true);
+        return 5;
+      }
+      return next;
+    });
+  };
+
   const value = useMemo<PlayerContextValue>(
     () => ({
       playlist,
+      basePlaylistLength,
       currentSongIndex,
       currentSong,
       isPlaying,
@@ -171,8 +203,22 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
       prev,
       playTrackAt,
       seekTo,
+      secretUnlocked,
+      secretTapCount,
+      registerSecretTap,
     }),
-    [playlist, currentSongIndex, currentSong, isPlaying, volume, currentTime, duration],
+    [
+      playlist,
+      basePlaylistLength,
+      currentSongIndex,
+      currentSong,
+      isPlaying,
+      volume,
+      currentTime,
+      duration,
+      secretUnlocked,
+      secretTapCount,
+    ],
   );
 
   return (
@@ -204,6 +250,7 @@ export function usePlayer() {
     const currentSong = MUSIC_PLAYER_PLAYLIST[0] ?? FALLBACK_TRACK;
     return {
       playlist: MUSIC_PLAYER_PLAYLIST,
+      basePlaylistLength: MUSIC_PLAYER_PLAYLIST.length,
       currentSongIndex: 0,
       currentSong,
       isPlaying: false,
@@ -218,6 +265,9 @@ export function usePlayer() {
       prev: () => {},
       playTrackAt: () => {},
       seekTo: () => {},
+      secretUnlocked: false,
+      secretTapCount: 0,
+      registerSecretTap: () => {},
     };
   }
   return context;

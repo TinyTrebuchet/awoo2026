@@ -4,7 +4,16 @@ import { usePlayer } from "@/context/player-context";
 import { RetroButton } from "@/components/RetroButton";
 
 export default function Playlist() {
-  const { playlist, currentSongIndex, isPlaying, playTrackAt } = usePlayer();
+  const {
+    playlist,
+    basePlaylistLength,
+    currentSongIndex,
+    isPlaying,
+    playTrackAt,
+    secretTapCount,
+    secretUnlocked,
+    registerSecretTap,
+  } = usePlayer();
 
   return (
     <div className="min-h-screen p-4 sm:p-8 pb-36 sm:pb-32">
@@ -51,9 +60,31 @@ export default function Playlist() {
                     <p className="text-sm sm:text-base font-display text-vintageBlack truncate">
                       {track.title}
                     </p>
-                    <p className="text-xs sm:text-sm font-mono text-gray-600 truncate">
-                      {track.composer}
-                    </p>
+                    {idx === basePlaylistLength - 1 ? (
+                      <button
+                        type="button"
+                        onClick={registerSecretTap}
+                        className="group inline-flex items-center gap-1 text-xs sm:text-sm font-mono text-gray-700 hover:text-dustyRose transition-colors"
+                        aria-label="Tap to unlock hidden song"
+                      >
+                        <Sparkles className="w-3.5 h-3.5 text-amber-400 animate-pulse" />
+                        <span className="truncate">{track.composer}</span>
+                        <Sparkles className="w-3.5 h-3.5 text-pink-400 animate-pulse" />
+                        {!secretUnlocked ? (
+                          <span className="ml-1 text-[10px] sm:text-xs text-dustyRose/80">
+                            {secretTapCount}/5
+                          </span>
+                        ) : (
+                          <span className="ml-1 text-[10px] sm:text-xs text-sage">
+                            unlocked
+                          </span>
+                        )}
+                      </button>
+                    ) : (
+                      <p className="text-xs sm:text-sm font-mono text-gray-600 truncate">
+                        {track.composer}
+                      </p>
+                    )}
                   </div>
                   <RetroButton
                     onClick={() => playTrackAt(idx)}
@@ -79,6 +110,13 @@ export default function Playlist() {
           transition={{ delay: 0.3 }}
           className="mt-6 sm:mt-8 p-4 sm:p-5 border-2 border-dashed border-sage bg-white/60 text-center"
         >
+          {secretUnlocked ? (
+            <p className="mb-2 inline-flex items-center gap-2 text-sm sm:text-base font-mono text-dustyRose">
+              <Sparkles className="w-4 h-4" />
+              Secret track unlocked: handmade piano cover is now in the playlist. Enjoy!
+              <Sparkles className="w-4 h-4" />
+            </p>
+          ) : null}
           <p className="inline-flex items-center gap-2 text-sm sm:text-base font-mono text-gray-700">
             <Music2 className="w-4 h-4" />
             More tracks coming soon...

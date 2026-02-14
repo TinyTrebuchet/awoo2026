@@ -16,6 +16,7 @@ const LOCAL_MUSIC_FILES = [
   "9 - All of Me - Before You Exit.mp3",
   "10 - We Fell In Love In October - Girl in Red.mp3",
 ] as const;
+const SECRET_MUSIC_FILE = "<3 - We Fell in Love In October (Cover) - Gaurav.mp3";
 
 const ME_PHOTO_FILES = [
   "WhatsApp Image 2026-02-14 at 16.23.36 (1).jpeg",
@@ -132,6 +133,15 @@ export const MUSIC_PLAYER_PLAYLIST: PlaylistTrack[] = [...LOCAL_MUSIC_FILES]
   })
   .filter((track): track is PlaylistTrack => track !== null)
   .sort((a, b) => a.serial - b.serial);
+
+export const SECRET_PLAYLIST_TRACK: PlaylistTrack = {
+  id: 1001,
+  serial: 11,
+  title: "We Fell in Love In October (Cover)",
+  composer: "Gaurav",
+  displayTitle: "We Fell in Love In October (Cover) - Gaurav",
+  url: `/music/${encodeURIComponent(SECRET_MUSIC_FILE)}`,
+};
 
 export const LOVE_BLOG_CONTENT = {
   entryLabel: "Private Entry #001",
