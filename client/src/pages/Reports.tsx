@@ -10,15 +10,15 @@ export default function Reports() {
   ];
 
   return (
-    <div className="min-h-screen p-8 bg-cream">
+    <div className="min-h-screen p-4 sm:p-8 bg-cream">
       <div className="container mx-auto max-w-4xl space-y-12">
-        <section className="bg-white p-8 border-4 border-double border-dustyRose shadow-[8px_8px_0px_0px_rgba(220,174,150,0.5)]">
-          <header className="border-b-2 border-sage pb-4 mb-6 flex justify-between items-end">
+        <section className="bg-white p-4 sm:p-8 border-4 border-double border-dustyRose shadow-[8px_8px_0px_0px_rgba(220,174,150,0.5)]">
+          <header className="border-b-2 border-sage pb-4 mb-6 flex flex-col sm:flex-row gap-2 sm:gap-0 justify-between sm:items-end">
             <div>
-              <h1 className="text-3xl font-display">Simp Progress Report</h1>
+              <h1 className="text-2xl sm:text-3xl font-display">Simp Progress Report</h1>
               <p className="font-mono text-xs opacity-50">Subject ID: Manshika | Report #001</p>
             </div>
-            <div className="text-right font-mono text-[10px]">
+            <div className="sm:text-right font-mono text-[10px]">
               DATE: {new Date().toLocaleDateString()}
             </div>
           </header>
@@ -65,8 +65,8 @@ export default function Reports() {
           </div>
         </section>
 
-        <section className="bg-white p-8 border-4 border-double border-sage shadow-[8px_8px_0px_0px_rgba(156,175,136,0.5)]">
-          <h2 className="text-2xl font-display mb-6 border-b-2 border-dustyRose pb-2">The Manshika-to-English Dictionary</h2>
+        <section className="bg-white p-4 sm:p-8 border-4 border-double border-sage shadow-[8px_8px_0px_0px_rgba(156,175,136,0.5)]">
+          <h2 className="text-xl sm:text-2xl font-display mb-6 border-b-2 border-dustyRose pb-2">The Manshika-to-English Dictionary</h2>
           <div className="space-y-4">
             {dictionary.map((item) => (
               <div key={item.term} className="flex gap-4 items-start group">

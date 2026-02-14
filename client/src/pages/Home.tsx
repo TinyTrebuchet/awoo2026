@@ -22,8 +22,10 @@ export default function Home() {
   }, []);
 
   const handleNoHover = () => {
-    const x = Math.random() * 200 - 100;
-    const y = Math.random() * 200 - 100;
+    const isMobile = window.innerWidth < 640;
+    const range = isMobile ? 80 : 200;
+    const x = Math.random() * range - range / 2;
+    const y = Math.random() * range - range / 2;
     setNoBtnPosition({ x, y });
   };
 
@@ -75,11 +77,11 @@ export default function Home() {
   }, []);
 
   return (
-    <div className="min-h-screen relative overflow-x-hidden pb-32 bg-cream">
+    <div className="min-h-screen relative overflow-x-hidden pb-36 sm:pb-32 bg-cream">
       <div className="scanlines" />
 
       {/* Hero Section */}
-      <main className="container mx-auto px-4 py-16 flex flex-col items-center justify-center min-h-[80vh] relative z-10">
+      <main className="container mx-auto px-4 sm:px-6 py-10 sm:py-16 flex flex-col items-center justify-center min-h-[80vh] relative z-10">
         
         {/* Floating Hearts BG */}
         <div className="absolute inset-0 overflow-hidden pointer-events-none -z-10 opacity-20">
@@ -101,7 +103,7 @@ export default function Home() {
         </div>
 
         {/* Main Card */}
-        <div className="bg-white/80 backdrop-blur-sm p-8 md:p-12 border-4 border-double border-dusty-rose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] text-center max-w-2xl w-full">
+        <div className="bg-white/80 backdrop-blur-sm p-5 sm:p-8 md:p-12 border-4 border-double border-dusty-rose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] text-center max-w-2xl w-full">
           <AnimatePresence mode="wait">
             {valentineStatus === "pending" ? (
               <motion.div
@@ -111,13 +113,13 @@ export default function Home() {
                 exit={{ opacity: 0, scale: 1.1 }}
                 className="space-y-8"
               >
-                <h1 className="text-3xl md:text-5xl leading-tight text-vintage-black">
+                <h1 className="text-2xl sm:text-3xl md:text-5xl leading-tight text-vintage-black">
                   Manshika,<br />
                   <span className="text-primary text-xl md:text-3xl mt-4 block">will you be my Valentine?</span>
                 </h1>
                 
-                <div className="flex flex-col md:flex-row gap-6 justify-center items-center mt-12 h-32">
-                  <div className="relative">
+                <div className="flex flex-col md:flex-row gap-4 sm:gap-6 justify-center items-center mt-8 sm:mt-12 min-h-[8rem] sm:h-32 w-full">
+                  <div className="relative w-full sm:w-auto">
                     {isYesFuming && (
                       <motion.div
                         aria-hidden
@@ -132,10 +134,11 @@ export default function Home() {
                     <motion.div
                       animate={isYesFuming ? { x: [0, -3, 3, -2, 2, 0] } : { x: 0 }}
                       transition={isYesFuming ? { duration: 0.45, repeat: Infinity } : { duration: 0.2 }}
+                      className="w-full sm:w-auto"
                     >
                       <RetroButton
                         onClick={handleYesClick}
-                        className={`text-lg px-8 py-4 text-white ${
+                        className={`w-full sm:w-auto text-base sm:text-lg px-6 sm:px-8 py-3 sm:py-4 text-white ${
                           isYesFuming
                             ? "bg-red-500 hover:bg-red-600 border-red-700"
                             : "bg-primary hover:bg-primary/90"
@@ -151,10 +154,11 @@ export default function Home() {
                     transition={{ type: "spring", stiffness: 300, damping: 20 }}
                     onHoverStart={queueNoHover}
                     onHoverEnd={clearNoHoverQueue}
+                    className="w-full sm:w-auto"
                   >
                     <RetroButton 
                       variant="secondary"
-                      className="text-sm opacity-80"
+                      className="w-full sm:w-auto text-sm opacity-80"
                       title="Nice try!"
                       onClick={handleNoClick}
                     >
@@ -184,7 +188,7 @@ export default function Home() {
         </div>
 
         {/* Interactive Modules */}
-        <div className="grid md:grid-cols-2 gap-12 mt-24 w-full max-w-5xl">
+        <div className="grid md:grid-cols-2 gap-8 sm:gap-12 mt-14 sm:mt-24 w-full max-w-5xl">
           
           {/* Compliment Generator */}
           <div className="bg-paper-white p-6 border-2 border-sage border-dashed relative">
@@ -211,9 +215,9 @@ export default function Home() {
           </div>
 
           {/* Polaroid Gallery */}
-          <div className="relative h-64 flex items-center justify-center">
+          <div className="relative min-h-[14rem] sm:h-64 flex items-center justify-center overflow-hidden">
              <div className="absolute top-0 left-0 w-full h-full border-2 border-gray-300 bg-white/50 backdrop-blur-sm -z-10 rotate-1" />
-             <div className="flex -space-x-12 hover:space-x-4 transition-all duration-500">
+             <div className="flex scale-90 sm:scale-100 -space-x-8 sm:-space-x-12 hover:space-x-2 sm:hover:space-x-4 transition-all duration-500">
                 {HOME_POLAROID_PHOTOS.map((photo) => (
                   <Polaroid
                     key={photo.src}

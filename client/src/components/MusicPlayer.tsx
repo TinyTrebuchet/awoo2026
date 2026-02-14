@@ -40,7 +40,7 @@ export function MusicPlayer() {
   };
 
   return (
-    <div className="fixed bottom-4 right-4 z-40 w-64 bg-[#c0c0c0] border-2 border-t-white border-l-white border-r-[#808080] border-b-[#808080] p-1 shadow-xl font-sans text-xs">
+    <div className="fixed bottom-2 sm:bottom-4 left-2 right-2 sm:left-auto sm:right-4 z-40 sm:w-64 bg-[#c0c0c0] border-2 border-t-white border-l-white border-r-[#808080] border-b-[#808080] p-1 shadow-xl font-sans text-xs">
       {/* Winamp Title Bar */}
       <div className="bg-[#000080] text-white px-2 py-1 mb-2 flex items-center justify-between">
         <span className="font-bold truncate">WINAMP - {currentSong.title}</span>

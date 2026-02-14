@@ -35,7 +35,7 @@ export default function Guestbook() {
   };
 
   return (
-    <div className="min-h-screen p-8 bg-cream flex items-center justify-center overflow-hidden">
+    <div className="min-h-screen p-4 sm:p-8 bg-cream flex items-center justify-center overflow-hidden">
       <AnimatePresence>
         {!isAnimating ? (
           <motion.div 
@@ -43,13 +43,13 @@ export default function Guestbook() {
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             exit={{ opacity: 0, y: -100, scale: 0.5 }}
-            className="max-w-xl w-full bg-white p-8 border-4 border-double border-dustyRose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] relative"
+            className="max-w-xl w-full bg-white p-4 sm:p-8 border-4 border-double border-dustyRose shadow-[10px_10px_0px_0px_rgba(220,174,150,0.5)] relative"
           >
-            <div className="absolute -top-4 -right-4 bg-primary text-white p-2 rotate-12 shadow-md">
+            <div className="absolute -top-3 -right-3 sm:-top-4 sm:-right-4 bg-primary text-white p-1.5 sm:p-2 rotate-12 shadow-md">
               <Mail size={24} />
             </div>
 
-            <h1 className="text-2xl font-display mb-6 flex items-center gap-2">
+            <h1 className="text-xl sm:text-2xl font-display mb-6 flex items-center gap-2">
               <AlertCircle className="text-dustyRose" />
               Digital Terms & Conditions
             </h1>
@@ -66,7 +66,7 @@ export default function Guestbook() {
               </p>
             </div>
 
-            <div className="flex items-center space-x-3 p-4 border-2 border-dashed border-sage bg-sage/5 mb-8">
+            <div className="flex items-center space-x-3 p-3 sm:p-4 border-2 border-dashed border-sage bg-sage/5 mb-8">
               <Checkbox 
                 id="approve" 
                 checked={isApproved} 
@@ -75,7 +75,7 @@ export default function Guestbook() {
               />
               <label 
                 htmlFor="approve" 
-                className="text-lg font-handwriting cursor-pointer select-none"
+                className="text-base sm:text-lg font-handwriting cursor-pointer select-none"
               >
                 Manshika Approved ❤️
               </label>

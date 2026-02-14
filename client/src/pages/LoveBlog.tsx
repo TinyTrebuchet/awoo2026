@@ -12,13 +12,13 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
   const [, setLocation] = useLocation();
 
   return (
-    <div className="min-h-screen p-8 max-w-4xl mx-auto space-y-12 pb-32">
+    <div className="min-h-screen p-4 sm:p-8 max-w-4xl mx-auto space-y-8 sm:space-y-12 pb-36 sm:pb-32">
       <motion.header 
         initial={{ y: -50, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         className="text-center space-y-4 border-b-4 border-double border-dusty-rose pb-8"
       >
-        <h1 className="text-4xl md:text-6xl text-primary animate-pulse">
+        <h1 className="text-3xl sm:text-4xl md:text-6xl text-primary animate-pulse">
           <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 mr-4 text-red-500 fill-red-500" />
           My Secret Love Blog
           <Heart className="inline-block w-8 h-8 md:w-12 md:h-12 ml-4 text-red-500 fill-red-500" />
@@ -32,7 +32,7 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
         initial={{ y: 20, opacity: 0 }}
         animate={{ y: 0, opacity: 1 }}
         transition={{ delay: 0.2 }}
-        className="relative bg-paper-white border-2 border-dustyRose/50 p-8 md:p-10 rounded-lg shadow-[10px_10px_0px_0px_rgba(220,174,150,0.35)] overflow-hidden"
+        className="relative bg-paper-white border-2 border-dustyRose/50 p-5 sm:p-8 md:p-10 rounded-lg shadow-[10px_10px_0px_0px_rgba(220,174,150,0.35)] overflow-hidden"
       >
         <div className="absolute top-4 right-4 text-pink-500 rotate-12 opacity-80">
           <Sparkles className="w-6 h-6" />
@@ -47,10 +47,10 @@ export default function LoveBlog({ onBack }: LoveBlogProps) {
           <p className="font-mono text-xs text-gray-500 uppercase tracking-wider mb-3">
             {LOVE_BLOG_CONTENT.entryLabel}
           </p>
-          <h2 className="text-3xl md:text-4xl mb-6 font-handwriting text-primary border-b border-dustyRose/50 pb-2">
+          <h2 className="text-2xl sm:text-3xl md:text-4xl mb-4 sm:mb-6 font-handwriting text-primary border-b border-dustyRose/50 pb-2">
             {LOVE_BLOG_CONTENT.heading}
           </h2>
-          <p className="font-handwriting text-2xl md:text-3xl leading-relaxed text-gray-800">
+          <p className="font-handwriting text-xl sm:text-2xl md:text-3xl leading-relaxed text-gray-800">
             {LOVE_BLOG_CONTENT.body[0]} {LOVE_BLOG_CONTENT.body[1]}
             <br /><br />
             {LOVE_BLOG_CONTENT.body[2]}

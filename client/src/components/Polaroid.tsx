@@ -14,7 +14,7 @@ export function Polaroid({ src, caption, rotation = 0, delay = 0 }: PolaroidProp
       animate={{ opacity: 1, scale: 1, rotate: rotation }}
       transition={{ delay, duration: 0.5, type: "spring" }}
       whileHover={{ scale: 1.1, rotate: 0, zIndex: 10, filter: "none" }}
-      className="bg-white p-3 pb-8 shadow-lg w-48 inline-block transform transition-all duration-300 relative group"
+      className="bg-white p-2.5 sm:p-3 pb-7 sm:pb-8 shadow-lg w-40 sm:w-48 inline-block transform transition-all duration-300 relative group"
       style={{ filter: "sepia(0.3) contrast(1.1) brightness(1.1)" }}
     >
       <div className="aspect-square bg-gray-200 overflow-hidden border border-gray-100 relative">
@@ -26,8 +26,8 @@ export function Polaroid({ src, caption, rotation = 0, delay = 0 }: PolaroidProp
         {/* Glossy overlay */}
         <div className="absolute inset-0 bg-gradient-to-tr from-transparent to-white/20 pointer-events-none" />
       </div>
-      <p 
-        className="text-center font-handwriting text-xl mt-3 text-gray-800 rotate-[-1deg]"
+      <p
+        className="text-center font-handwriting text-lg sm:text-xl mt-2.5 sm:mt-3 text-gray-800 rotate-[-1deg]"
         style={{ fontFamily: "'Caveat', cursive" }}
       >
         {caption}
